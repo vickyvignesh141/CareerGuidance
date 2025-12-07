@@ -8,14 +8,15 @@ import io
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
+from dotenv import load_dotenv
 from groq import Groq
 
 app = Flask(__name__, template_folder='templates', static_folder='static')
 CORS(app)
 app.secret_key = 'Vicky@987'
-
+load_dotenv()
 # === Groq Client ===
-GROQ_API_KEY = os.environ.get("GROQ_API_KEY", "")
+GROQ_API_KEY = os.getenv("GROQ_API_KEY")
 client = Groq(api_key=GROQ_API_KEY)
 
 # === Student DB ===

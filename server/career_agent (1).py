@@ -13,12 +13,19 @@ import os
 import json
 import re
 import matplotlib.pyplot as plt
+from dotenv import load_dotenv
 from groq import Groq
 from typing import List
 
-# Replace with your real Groq key
-os.environ["GROQ_API_KEY"] = ""
-client = Groq(api_key=os.environ["GROQ_API_KEY"])
+# Load variables from .env
+load_dotenv()
+
+# Access the API key
+GROQ_API_KEY = os.getenv("GROQ_API_KEY")
+
+# Initialize client
+client = Groq(api_key=GROQ_API_KEY)
+
 
 questions = [
 
