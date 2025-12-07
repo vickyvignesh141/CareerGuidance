@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard - AI Career Assistant</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='carpre.css') }}">
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    <header class="header">
+        <div class="header-left">
+            <img src="{{ url_for('static', filename='images/blueimage.jpeg') }}" alt="Profile" class="profile-img">
+            <div class="profile-info">
+                <p><strong>Name:</strong> <span id="userName"></span></p>
+                <p><strong>Maatram ID:</strong> <span id="userMaatramId"></span></p>
+                <p><strong>Phone:</strong> <span id="userPhone"></span></p>
+            </div>
+        </div>
+
+        <h1 class="header-title">Student Dashboard</h1>
+
+        <div class="header-right">
+            <button id="sidebarToggle" class="sidebar-toggle">&#9776;</button>
+        </div>
+    </header>
+
+    <!-- SIDEBAR -->
+    <div id="sidebar" class="sidebar">
+        <div class="sidebar-content">
+            <h2>Complete Your Profile</h2>
+
+            <form id="profileForm" class="form-box">
+
+                <div class="form-group">
+                    <label>Program</label>
+                    <input type="text" placeholder="Eg: BE, BTECH, Nursing">
+                </div>
+
+                <div class="form-group">
+                    <label>Batch</label>
+                    <input type="text" placeholder="Eg: 2024-2028">
+                </div>
+
+                <div class="form-group">
+                    <label>College Name</label>
+                    <input type="text" placeholder="College Name">
+                </div>
+
+                <div class="form-group">
+                    <label>Current Year & Sem</label>
+                    <input type="text" placeholder="Eg: 3rd Year, Sem 6">
+                </div>
+
+                <div class="form-group">
+                    <label>Department</label>
+                    <input type="text" placeholder="Department">
+                </div>
+
+                <div class="form-group">
+                    <label>LinkedIn ID</label>
+                    <input type="text" placeholder="LinkedIn Profile">
+                </div>
+
+                <div class="form-group">
+                    <label>Phone Number</label>
+                    <input type="text" id="phoneNumber" placeholder="Phone Number">
+                </div>
+
+                <div class="form-group checkbox-row">
+                    <label>
+                        <input type="checkbox" id="sameWhatsapp"> WhatsApp same as Phone?
+                    </label>
+                </div>
+
+                <div class="form-group">
+                    <label>WhatsApp Number</label>
+                    <input type="text" id="whatsappNumber" placeholder="WhatsApp Number">
+                </div>
+
+                <div class="form-group">
+                    <label>Address</label>
+                    <input type="text" placeholder="Address">
+                </div>
+
+                <button type="submit" class="submit-btn">Submit</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+
+        <div class="layout">
+
+            <!-- WALLET BOX -->
+            <div class="wallet-box">
+                <h2>Wallet</h2>
+
+                <!-- VOLUNTEERING -->
+                <div class="wallet-section">
+                    <h3>VOLUNTEERING</h3>
+                    <div class="wallet-actions">
+                        <label class="add-btn">Add
+                            <input type="file" class="file-upload" data-type="volunteering"
+                                   accept=".pdf,.jpg,.png,.jpeg,.webp" />
+                        </label>
+                        <button class="view-btn" data-type="volunteering">View</button>
+                    </div>
+                </div>
+
+                <!-- SKILLS -->
+                <div class="wallet-section">
+                    <h3>SKILLS & CERTIFICATES</h3>
+                    <div class="wallet-actions">
+                        <label class="add-btn">Add
+                            <input type="file" class="file-upload" data-type="skills"
+                                   accept=".pdf,.jpg,.png,.jpeg,.webp" />
+                        </label>
+                        <button class="view-btn" data-type="skills">View</button>
+                    </div>
+                </div>
+
+                <!-- ACTIVITY -->
+                <div class="wallet-section">
+                    <h3>EXTRACURRICULAR ACTIVITY</h3>
+                    <div class="wallet-actions">
+                        <label class="add-btn">Add
+                            <input type="file" class="file-upload" data-type="activity"
+                                   accept=".pdf,.jpg,.png,.jpeg,.webp" />
+                        </label>
+                        <button class="view-btn" data-type="activity">View</button>
+                    </div>
+                </div>
+
+                <!-- POPUP -->
+                <div id="filePopup" class="popup">
+                    <div class="popup-content">
+                        <h3>Uploaded Files</h3>
+                        <ul id="fileList"></ul>
+                        <button class="close-popup">Close</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CAREER QUESTIONS & ACTION PLAN -->
+            <div id="careerWrapper">
+
+                <!-- QUESTIONS BOX -->
+                <div class="career-box" id="questionsBox">
+                    <h2>Answer Questions for AI Career Recommendation</h2>
+
+                    <div class="form-box" id="questionsContainer">
+                        <p id="questionText"></p>
+
+                        <input type="text" id="answerInput" placeholder="Type your answer here">
+
+                        <!-- Next Button -->
+                        <button id="nextBtn" type="button">Next</button>
+
+                        <!-- Show Career Button (Hidden until last question) -->
+                        <button id="resultBtn" type="button" style="display:none; background:#007bff; color:white;">
+                            Show Career
+                        </button>
+                    </div>
+                </div>
+
+                <!-- ACTION PLAN BOX -->
+                <div class="career-box" id="actionPlanBox">
+                    <h2>AI Generated Action Plan</h2>
+
+                    <div id="actionPlanResult" class="result-box" style="display:none;"></div>
+
+                    <button id="showDailyBtn" style="display:none;">Show Daily Schedule</button>
+                    <button id="showWeeklyBtn" style="display:none;">Show Weekly Schedule</button>
+                    <button id="showStarterBtn" style="display:none;">Show Starter Guide</button>
+                    <button id="updateProgressBtn" style="display:none;">Update Progress</button>
+                    <button id="showGraphBtn" style="display:none;">Show Progress Graph</button>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- CAREER RESULT BOX -->
+        <div class="career-box" id="careerResultBox" style="display:none;">
+            <h2>Recommended Careers</h2>
+            <div id="careerResult" class="result-box" style="display:none;"></div>
+            <button id="selectCareerBtn" style="display:none;">Select Career</button>
+        </div>
+
+    </main>
+
+    <script src="{{ url_for('static', filename='carpre.js') }}"></script>
+
+</body>
+</html>

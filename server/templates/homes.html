@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Maatram Dashboard</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='homes.css') }}">
+</head>
+<body>
+  <!-- Sidebar -->
+  <div class="sidebar" id="sidebar">
+    <h2>Maatram</h2>
+    <a href="/" class="active">🏠 Home</a>
+    <!-- homes.html -->
+<a href="{{ url_for('register_page') }}">🎓 Student</a>
+<a href="{{ url_for('register_page') }}">👨‍🏫 Mentor</a>
+<a href="{{ url_for('register_page') }}">🛠️ Admin</a>
+
+  </div>
+
+  <!-- Header -->
+  <header>
+    <div class="menu-btn" id="menuBtn">&#9776;</div>
+    <h1>Maatram Student Profiling Platform</h1>
+    <h2>Dreams become real when effort meets consistency</h2>
+  </header>
+
+  <!-- Main content -->
+  <main>
+    <div class="container">
+      <!-- About Card -->
+      <div class="card">
+        <h2>Guiding Every Student Toward the Right Career Path</h2>
+        <p>
+          Education is not just about getting a degree — it’s about discovering who you are, what you love, and how you can make an impact.
+          Maatram Career Connect is a next-generation AI-powered student profiling platform that helps every student find their right direction in life.Our system analyzes academic performance, skills, financial conditions, and interests to guide each student toward a career that truly suits them. 
+          Built with inspiration from Maatram Foundation's mission of changing lives through education, this platform is designed to ensure no student's potential goes unnoticed.
+        </p>
+      </div>
+
+      <!-- Mission Card -->
+      <div class="card">
+        <h2>🎯 Our Mission</h2>
+        <p>
+          Our mission is to ensure that every deserving student receives the right career guidance at the right time.
+          We aim to bridge the gap between education and employability through technology, mentorship, and real-time insights.
+          We focus on creating an environment where students can explore their strengths, understand industry demands, and prepare for their future with confidence. By combining Al-based recommendations with human mentorship, Maatram Career Connect empowers students to make informed career decisions, whether they want to enter the IT field, pursue research, start their own business, or serve society through core industries.
+        </p>
+      </div>
+
+      <!-- Why Card -->
+      <div class="card">
+        <h2>🌟 Why Maatram Career Connect Was Born</h2>
+        <p>Many students in India face the same challenge — scoring good marks but not knowing what comes next. They wonder whether to pursue engineering, arts, or another field, often without clear guidance. Some even compromise due to lack of financial support. That’s where our idea began.
+Maatram Career Connect was born to solve this confusion. Our platform uses AI algorithms to evaluate a student’s performance, interests, and goals to recommend the best career paths. It doesn’t just suggest — it explains why a particular career is suitable. This ensures that students, parents, and mentors all understand the reasoning behind each recommendation.</p>
+      </div>
+
+      <!-- Foundation Card -->
+      <div class="card">
+        <h2>❤️ Inspired by Maatram Foundation</h2>
+        <p>Maatram Foundation has been a beacon of hope for thousands of students who dream big but come from humble backgrounds. Since its inception, the foundation has helped over 3,300 students pursue free higher education across Tamil Nadu. Inspired by this vision, we created Maatram Career Connect to continue that journey — from education access to career success. While Maatram Foundation ensures that deserving students get into good colleges, our platform ensures they choose the right career and stay motivated to reach their goals. Together, we are building a complete ecosystem of education, empowerment, and employment. </p>
+      </div>
+
+      
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <h3>Contact Us</h3>
+    <p><b>Reach Us:</b> +91 9551014389 / 8925927943 / 8925927948 / 8925927944 / 7358290637</p>
+    <p><b>Working Hours:</b> 09:30 a.m. - 06:00 p.m.</p>
+    <p><b>Email:</b> enquiry@maatramfoundation.com</p>
+    <p><b>Address:</b> No. 47, 7th cross street, Rengareddy Gardens, Neelangarai, Chennai - 600115</p>
+  </footer>
+
+  <script src="{{ url_for('static', filename='homes.js') }}"></script>
+</body>
+</html>

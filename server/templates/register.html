@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Maatram — Login / Register</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='register.css') }}">
+</head>
+<body>
+  <main class="wrap">
+    <section class="card left">
+      <div class="brand">
+        <h1>Maatram</h1>
+        <p class="muted">Student Profiling Platform</p>
+      </div>
+
+      <div class="intro">
+        <h2>Welcome to Maatram</h2>
+        <p class="muted">
+          Login if you already have an account or register to join as Student, Mentor, or Admin.
+        </p>
+        <div class="cta">
+          <button id="btnLogin" class="btn active">Login</button>
+          <button id="btnRegister" class="btn">Register</button>
+        </div>
+      </div>
+
+      <footer class="brand-foot">
+        <small>© Maatram Foundation</small>
+      </footer>
+    </section>
+
+    <section class="card right">
+      <div class="form-container">
+        <!-- LOGIN -->
+        <form id="loginForm" class="form active" autocomplete="off" novalidate>
+          <h2>Login</h2>
+
+          <label for="username">Username — Maatram ID</label>
+          <input id="username" name="username" type="text" placeholder="MAA000000" required>
+
+          <label for="dob">Password — dd/mm/yyyy</label>
+          <input id="dob" name="dob" type="password" placeholder="00/00/0000" required>
+
+          <!-- User type radio buttons -->
+          <div class="user-type">
+            <label><input type="radio" name="user_type" value="student" required> Student</label>
+            <label><input type="radio" name="user_type" value="mentor"> Mentor</label>
+            <label><input type="radio" name="user_type" value="admin"> Admin</label>
+          </div>
+
+          <button type="submit" class="btn-submit">Login</button>
+        </form>
+
+        <!-- REGISTER -->
+        <form id="registerForm" class="form" autocomplete="off" novalidate>
+          <h2>Register</h2>
+
+          <label for="role">Select role</label>
+          <select id="role" name="role" required>
+            <option value="">-- Select role --</option>
+            <option value="student">Student</option>
+            <option value="mentor">Mentor</option>
+            <option value="admin">Admin</option>
+          </select>
+
+          <label for="name">Name with initial</label>
+          <input id="name" name="name" type="text" placeholder="Vicky S" required>
+
+          <label for="gender">Gender</label>
+          <select id="gender" name="gender" required>
+            <option value="">-- Select gender --</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+            <option value="transgender">Transgender</option>
+          </select>
+
+          <label for="maatramId">Maatram ID</label>
+          <input id="maatramId" name="maatramId" type="text" placeholder="MAA000000" required>
+
+          <label for="email">Email</label>
+          <input id="email" name="email" type="email" placeholder="example@gmail.com" required>
+
+          <label for="password">New password (dd/mm/yyyy)</label>
+          <input id="password" name="password" type="password" placeholder="00/00/0000" required>
+
+          <label for="confirmPassword">Confirm password</label>
+          <input id="confirmPassword" name="confirmPassword" type="password" placeholder="00/00/0000" required>
+
+          <button id="submitRegister" type="submit" class="btn-submit">Submit</button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script src="{{ url_for('static', filename='register.js') }}"></script>
+</body>
+</html>

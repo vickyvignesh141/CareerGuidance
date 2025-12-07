@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mentor Dashboard</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='mentor.css') }}">
+  <style>
+    /* ================= MINI STUDENT PANEL ================= */
+    #studentPanel {
+      position: fixed;
+      top: 0;
+      right: -400px; /* hidden by default */
+      width: 400px;
+      height: 100%;
+      background-color: #fff;
+      border-left: 2px solid #ccc;
+      box-shadow: -2px 0 5px rgba(0,0,0,0.2);
+      overflow-y: auto;
+      transition: right 0.4s ease;
+      z-index: 1000;
+      padding: 20px;
+    }
+
+    #studentPanel.open {
+      right: 0; /* slide-in */
+    }
+
+    #studentPanel .close-panel {
+      cursor: pointer;
+      font-size: 24px;
+      float: right;
+      margin-bottom: 10px;
+    }
+
+    /* ================= OVERLAY ================= */
+    #overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.4);
+      display: none;
+      z-index: 900;
+    }
+
+    /* ================= BUTTON STYLING ================= */
+    .btn {
+      padding: 8px 12px;
+      margin-top: 8px;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .btn:hover {
+      background-color: #0056b3;
+    }
+
+    /* ================= OPTIONAL STYLING ================= */
+    body {
+      font-family: "Poppins", sans-serif;
+      margin: 0;
+      background-color: #f4f4f4;
+    }
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background-color: #fff;
+      padding: 10px 20px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      position: sticky;
+      top: 0;
+      z-index: 800;
+    }
+    .header-title {
+      margin: 0;
+      font-size: 24px;
+    }
+    .sidebar-toggle {
+      font-size: 24px;
+      cursor: pointer;
+    }
+    .mentor-search-container {
+      padding: 20px;
+    }
+    .search-bar {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    .search-bar input {
+      width: 100%;
+      padding: 8px 10px;
+      margin-left: 5px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    .students-list {
+      max-height: 500px;
+      overflow-y: auto;
+      background-color: #fff;
+      border-radius: 5px;
+      padding: 10px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+    .students-list div {
+      padding: 8px;
+      border-bottom: 1px solid #eee;
+      cursor: pointer;
+    }
+    .students-list div:hover {
+      background-color: #f1f1f1;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ================= HEADER ================= -->
+  <header class="header">
+    <div class="header-left">
+      <img src="{{ url_for('static', filename='images/blueimage.jpeg') }}" alt="Profile" class="profile-img" style="width:50px; height:50px; border-radius:50%;">
+      <div class="profile-info" style="margin-left:10px;">
+        <p><strong>Name:</strong> <span id="userName"></span></p>
+        <p><strong>Maatram ID:</strong> <span id="userMaatramId"></span></p>
+        <p><strong>Phone:</strong> <span id="userPhone"></span></p>
+      </div>
+    </div>
+    <h1 class="header-title">Mentor Dashboard</h1>
+    <div class="sidebar-toggle" id="sidebarToggle">&#9776;</div>
+  </header>
+
+  <!-- ================= SIDEBAR ================= -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-content">
+      <img src="{{ url_for('static', filename='profile.png') }}" alt="Profile" class="sidebar-profile-img" style="width:80px; height:80px; border-radius:50%; margin:10px auto; display:block;">
+      <div class="sidebar-form-box">
+        <h2>Complete Profile</h2>
+        <div class="form-group"><label for="program">Program:</label><input type="text" id="program" placeholder="Eg: BE, BTECH, Nursing, Arts"></div>
+        <div class="form-group"><label for="batch">Batch:</label><input type="text" id="batch" placeholder="Eg: 2024-2028"></div>
+        <div class="form-group"><label for="college">College Name:</label><input type="text" id="college" placeholder="Enter college name"></div>
+        <div class="form-group"><label for="company">Company & Role:</label><input type="text" id="company" placeholder="Eg: Google - Software Engineer"></div>
+        <div class="form-group"><label for="department">Department:</label><input type="text" id="department" placeholder="Eg: CSE"></div>
+        <div class="form-group"><label for="linkedin">LinkedIn ID:</label><input type="text" id="linkedin" placeholder="LinkedIn URL"></div>
+        <div class="form-group"><label for="phone">Phone Number:</label><input type="text" id="phone" placeholder="Phone number"></div>
+        <div class="form-group checkbox-row"><input type="checkbox" id="waCheckbox"><label for="waCheckbox">Same as WhatsApp number</label></div>
+        <div class="form-group"><label for="whatsapp">WhatsApp Number:</label><input type="text" id="whatsapp" placeholder="WhatsApp number"></div>
+        <div class="form-group"><label for="address">Address:</label><input type="text" id="address" placeholder="Enter address"></div>
+        <button id="submitProfile" class="btn">Submit</button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ================= STUDENT SEARCH + LIST ================= -->
+  <div class="mentor-search-container">
+    <div class="search-bar">
+      <i class="search-icon">🔍</i>
+      <input type="text" id="studentSearch" placeholder="Search by Maatram ID, Name or Phone">
+    </div>
+    <div id="studentsList" class="students-list">
+      <!-- Students dynamically listed here -->
+    </div>
+  </div>
+
+  <!-- ================= MINI STUDENT DETAILS SIDE PANEL ================= -->
+  <div id="studentPanel">
+    <span class="close-panel">&times;</span>
+    <h3 id="panelStudentName"></h3>
+    <p><strong>Maatram ID:</strong> <span id="panelStudentId"></span></p>
+    <p><strong>Phone:</strong> <span id="panelStudentPhone"></span></p>
+
+    <!-- Certificates / Skills Section -->
+    <div id="panelCertificates">
+      <h4>Certificates / Skills</h4>
+      <ul id="panelCertificateList"></ul>
+      <button id="addPanelCertificateBtn" class="btn">Add Certificate/Skill</button>
+    </div>
+
+    <!-- Action Plan Graph -->
+    <div id="panelGraph">
+      <button id="panelViewGraphBtn" class="btn">View Progress Graph</button>
+    </div>
+  </div>
+
+  <!-- ================= OVERLAY ================= -->
+  <div id="overlay"></div>
+
+  <!-- ================= SCRIPTS ================= -->
+  <script>
+    const studentPanel = document.getElementById('studentPanel');
+    const overlay = document.getElementById('overlay');
+    const closePanel = document.querySelector('#studentPanel .close-panel');
+
+    // Open student panel
+    function openStudentPanel(studentData) {
+      document.getElementById('panelStudentName').textContent = studentData.name;
+      document.getElementById('panelStudentId').textContent = studentData.maatramId;
+      document.getElementById('panelStudentPhone').textContent = studentData.phone;
+
+      // Certificates dynamically
+      const list = document.getElementById('panelCertificateList');
+      list.innerHTML = '';
+      if(studentData.certificates) {
+        studentData.certificates.forEach(cert => {
+          const li = document.createElement('li');
+          li.textContent = cert;
+          list.appendChild(li);
+        });
+      }
+
+      studentPanel.classList.add('open');
+      overlay.style.display = 'block';
+    }
+
+    // Close panel
+    closePanel.addEventListener('click', () => {
+      studentPanel.classList.remove('open');
+      overlay.style.display = 'none';
+    });
+
+    overlay.addEventListener('click', () => {
+      studentPanel.classList.remove('open');
+      overlay.style.display = 'none';
+    });
+  </script>
+
+  <script src="{{ url_for('static', filename='mentor.js') }}"></script>
+</body>
+</html>
