@@ -1,4 +1,4 @@
-// ================================
+// ==================================
 // register.js
 // Handles login/register form, validation, toast messages, and redirects
 // ================================
